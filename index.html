@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FooDiEs HuB — Order. Discover. Delight.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --crimson: #C0392B;
+      --crimson-dark: #96281B;
+      --crimson-light: #E74C3C;
+      --gold: #F0A500;
+      --cream: #FDF8F3;
+      --charcoal: #1A1A1A;
+      --charcoal-mid: #2C2C2C;
+      --muted: #888;
+      --card-bg: #fff;
+      --section-gap: 100px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      padding: 16px 0;
+      transition: all 0.4s ease;
+      background: transparent;
+    }
+    nav.scrolled {
+      background: rgba(26,26,26,0.97);
+      backdrop-filter: blur(12px);
+      padding: 10px 0;
+      box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900;
+      color: #fff; text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--crimson);
+      color: #fff !important;
+      padding: 8px 22px;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--crimson-dark) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1A1A1A 0%, #2C1A0E 50%, #1A0000 100%);
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(80px, 20vw, 220px);
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: auto;
+      padding: 120px 32px 60px;
+      width: 100%; position: relative; z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(240,165,0,0.15);
+      border: 1px solid rgba(240,165,0,0.4);
+      color: var(--gold);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-title .highlight { color: var(--gold); }
+    .hero-subtitle {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.1rem;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-search {
+      display: flex; gap: 12px;
+      max-width: 680px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .hero-search-box {
+      flex: 1;
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px 20px;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .hero-search-box:focus-within {
+      border-color: rgba(240,165,0,0.5);
+      background: rgba(255,255,255,0.12);
+    }
+    .hero-search-box i { color: var(--gold); font-size: 1.1rem; }
+    .hero-search-box input {
+      background: none; border: none; outline: none;
+      color: #fff; font-size: 0.95rem; width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero-search-box input::placeholder { color: rgba(255,255,255,0.4); }
+    .btn-primary-hero {
+      background: var(--crimson);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-primary-hero:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+
+    .hero-stats {
+      display: flex; gap: 48px;
+      margin-top: 60px;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900;
+      color: #fff;
+    }
+    .hero-stat-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-divider { width: 1px; background: rgba(255,255,255,0.1); }
+
+    .hero-floating-cards {
+      position: absolute; right: 32px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 16px;
+      animation: fadeLeft 0.8s 0.5s ease both;
+    }
+    .floating-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 16px 20px;
+      backdrop-filter: blur(12px);
+      min-width: 200px;
+      transition: transform 0.3s;
+    }
+    .floating-card:hover { transform: translateX(-4px); }
+    .floating-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .floating-card-title { color: #fff; font-size: 0.85rem; font-weight: 600; }
+    .floating-card-sub { color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 2px; }
+    .floating-card-badge {
+      display: inline-block;
+      background: rgba(240,165,0,0.2);
+      color: var(--gold);
+      font-size: 0.7rem; font-weight: 600;
+      padding: 2px 8px; border-radius: 50px;
+      margin-top: 8px;
+    }
+
+    /* ── SECTION SHARED ── */
+    .section { padding: var(--section-gap) 0; }
+    .container { max-width: 1200px; margin: auto; padding: 0 32px; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOD CATEGORIES ── */
+    #services { background: #fff; }
+    .slider-wrapper { position: relative; }
+    .slider-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--charcoal);
+      z-index: 10;
+      transition: all 0.2s;
+    }
+    .slider-arrow:hover { background: var(--crimson); color: #fff; border-color: var(--crimson); }
+    .slider-arrow.left { left: -22px; }
+    .slider-arrow.right { right: -22px; }
+    .category-slider {
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-behavior: smooth;
+      padding: 16px 4px;
+      scrollbar-width: none;
+    }
+    .category-slider::-webkit-scrollbar { display: none; }
+    .cat-card {
+      flex: 0 0 auto;
+      width: 130px;
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    .cat-card:hover {
+      border-color: var(--crimson);
+      background: #fff;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(192,57,43,0.15);
+    }
+    .cat-card img { width: 80px; height: 80px; object-fit: contain; }
+    .cat-card p {
+      margin-top: 10px; font-size: 0.8rem;
+      font-weight: 600; color: var(--charcoal);
+    }
+
+    /* ── INSTAMART ── */
+    #instamart { background: var(--cream); }
+    .insta-slider {
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-behavior: smooth;
+      padding: 16px 4px;
+      scrollbar-width: none;
+    }
+    .insta-slider::-webkit-scrollbar { display: none; }
+    .insta-card {
+      flex: 0 0 auto;
+      width: 150px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .insta-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .insta-card img { width: 90px; height: 90px; object-fit: contain; border-radius: 12px; }
+    .insta-card p {
+      margin-top: 12px; font-size: 0.78rem;
+      font-weight: 600; color: var(--charcoal);
+    }
+
+    /* ── RESTAURANTS ── */
+    #restaurants { background: #fff; }
+    .rest-slider {
+      display: flex; gap: 20px;
+      overflow-x: auto; scroll-behavior: smooth;
+      padding: 16px 4px 24px;
+      scrollbar-width: none;
+    }
+    .rest-slider::-webkit-scrollbar { display: none; }
+    .rest-card {
+      flex: 0 0 auto;
+      width: 270px;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transition: all 0.3s;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .rest-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+    }
+    .rest-img-wrap { position: relative; overflow: hidden; height: 170px; }
+    .rest-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .rest-card:hover .rest-img-wrap img { transform: scale(1.06); }
+    .rest-rating {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(26,26,26,0.85);
+      color: #fff;
+      font-size: 0.8rem; font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .rest-rating.high { background: #27AE60; }
+    .rest-body { padding: 18px; }
+    .rest-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .rest-cuisine { color: var(--muted); font-size: 0.8rem; margin-bottom: 8px; }
+    .rest-meta {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.78rem; color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+    .rest-meta span { display: flex; align-items: center; gap: 4px; }
+    .rest-offers { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .badge-offer {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 50px;
+    }
+    .badge-red { background: rgba(192,57,43,0.1); color: var(--crimson); }
+    .badge-gold { background: rgba(240,165,0,0.12); color: #B8860B; }
+    .btn-view {
+      display: block; width: 100%;
+      background: var(--charcoal);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.82rem; font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-view:hover { background: var(--crimson); color: #fff; }
+
+    /* ── BOOKING / CONTACT ── */
+    #contact { background: var(--cream); }
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .booking-info h2 { font-size: 2.8rem; margin-bottom: 20px; }
+    .booking-info p { color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+    .booking-feature {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .booking-feature-icon {
+      width: 48px; height: 48px;
+      background: rgba(192,57,43,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--crimson);
+      flex-shrink: 0;
+    }
+    .booking-feature-text h4 { font-size: 0.95rem; margin-bottom: 4px; }
+    .booking-feature-text p { color: var(--muted); font-size: 0.85rem; margin: 0; }
+    .booking-form {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--charcoal);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1.5px solid #eee;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--cream);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--crimson); background: #fff; }
+    .btn-book {
+      width: 100%;
+      margin-top: 24px;
+      background: var(--crimson);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-book:hover { background: var(--crimson-dark); transform: translateY(-2px); }
+
+    /* ── ABOUT / BRANCHES ── */
+    #about { background: var(--charcoal); }
+    #about .section-tag { color: var(--gold); }
+    #about .section-title { color: #fff; }
+    #about .section-subtitle { color: rgba(255,255,255,0.5); }
+    .branch-slider {
+      display: flex; gap: 20px;
+      overflow-x: auto; scroll-behavior: smooth;
+      padding: 16px 4px 24px;
+      scrollbar-width: none;
+    }
+    .branch-slider::-webkit-scrollbar { display: none; }
+    .branch-card {
+      flex: 0 0 auto;
+      width: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s;
+      background: rgba(255,255,255,0.04);
+    }
+    .branch-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(240,165,0,0.3);
+      background: rgba(255,255,255,0.07);
+    }
+    .branch-img { height: 180px; overflow: hidden; }
+    .branch-img img { width: 100%; height: 100%; object-fit: cover; }
+    .branch-body { padding: 20px; }
+    .branch-body h5 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: 1rem; margin-bottom: 6px;
+    }
+    .branch-body p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+    .branch-phone { color: var(--gold) !important; margin-top: 8px; }
+    .btn-order {
+      display: block; margin-top: 14px;
+      background: var(--crimson);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.82rem; font-weight: 600;
+      border: none; cursor: pointer;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-order:hover { background: var(--crimson-dark); }
+
+    /* ── PARTNERS ── */
+    #partners { background: #fff; }
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .partner-card {
+      border: 1.5px solid #eee;
+      border-radius: 20px;
+      padding: 32px 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .partner-card:hover {
+      border-color: var(--crimson);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .partner-card img { max-height: 60px; object-fit: contain; margin-bottom: 12px; }
+    .partner-card h6 { font-weight: 700; font-size: 0.9rem; }
+
+    /* ── AWARDS ── */
+    #awards { background: var(--cream); }
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    .award-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .award-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(192,57,43,0.12);
+    }
+    .award-card img { max-height: 64px; object-fit: contain; margin-bottom: 14px; }
+    .award-card h6 { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+    .award-card p { color: var(--muted); font-size: 0.75rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal-mid);
+      color: rgba(255,255,255,0.7);
+      padding: 80px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900;
+      color: #fff; margin-bottom: 16px;
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-desc { font-size: 0.9rem; line-height: 1.8; margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 12px; }
+    .footer-social-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .footer-social-btn:hover { background: var(--crimson); border-color: var(--crimson); color: #fff; }
+    .footer-col h5 {
+      color: #fff; font-size: 0.85rem;
+      font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-contact-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 14px; font-size: 0.88rem;
+    }
+    .footer-contact-item i { color: var(--gold); margin-top: 2px; font-size: 1rem; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: rgba(255,255,255,0.3);
+    }
+
+    /* Mobile Navbar */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #1A1A1A;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* HERO FIX */
+  .hero-inner {
+    padding: 100px 16px 40px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .hero-search {
+    flex-direction: column;
+  }
+
+  .btn-primary-hero {
+    width: 100%;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero-divider {
+    display: none;
+  }
+
+  /* SLIDER FIX */
+  .slider-arrow {
+    display: none;
+  }
+
+  .category-slider,
+  .insta-slider,
+  .rest-slider,
+  .branch-slider {
+    gap: 12px;
+    padding-left: 10px;
+  }
+
+  /* CARDS SMALLER */
+  .cat-card { width: 100px; }
+  .insta-card { width: 120px; }
+  .rest-card { width: 220px; }
+  .branch-card { width: 240px; }
+
+  /* BOOKING */
+  .booking-form {
+    padding: 20px;
+  }
+
+  /* FOOTER */
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(32px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-floating-cards { display: none; }
+      .booking-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .partners-grid { grid-template-columns: 1fr 1fr; }
+      .awards-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .hero-stats { gap: 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .awards-grid { grid-template-columns: repeat(2, 1fr); }
+      .partners-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="menu-toggle" onclick="toggleMenu()">
+  <i class="bi bi-list"></i>
+</div>
+    <a href="#home" class="nav-brand">FooDiEs <span>HuB</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Menu</a></li>
+      <li><a href="#restaurants">Restaurants</a></li>
+      <li><a href="#contact">Reserve</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="home">
+  <div class="hero-bg-text">FOOD</div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <i class="bi bi-star-fill"></i> Kolkata's #1 Food Delivery Platform
+    </div>
+    <h1 class="hero-title">
+      Discover.<br>
+      Order.<br>
+      <span class="highlight">Delight.</span>
+    </h1>
+    <p class="hero-subtitle">
+      From Biryani to Burgers — find the best restaurants near you and get food delivered fast, fresh, and hot.
+    </p>
+    <div class="hero-search">
+      <div class="hero-search-box">
+        <i class="bi bi-geo-alt-fill"></i>
+        <input type="text" placeholder="Enter delivery address…" id="locationInput">
+      </div>
+      <div class="hero-search-box" style="flex: 1.5;">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search restaurants or food…">
+      </div>
+      <button class="btn-primary-hero" onclick="detectLocation()">
+        <i class="bi bi-lightning-fill"></i> Find Food
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">500+</div>
+        <div class="hero-stat-label">Restaurants</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div>
+        <div class="hero-stat-num">30 min</div>
+        <div class="hero-stat-label">Avg. Delivery</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div>
+        <div class="hero-stat-num">4.8★</div>
+        <div class="hero-stat-label">Customer Rating</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-floating-cards">
+    <div class="floating-card">
+      <div class="floating-card-icon">🍔</div>
+      <div class="floating-card-title">Burgers & Fast Food</div>
+      <div class="floating-card-sub">120+ Options</div>
+      <span class="floating-card-badge">Most Ordered</span>
+    </div>
+    <div class="floating-card">
+      <div class="floating-card-icon">🍛</div>
+      <div class="floating-card-title">Biryani & Curries</div>
+      <div class="floating-card-sub">80+ Restaurants</div>
+      <span class="floating-card-badge">Top Rated</span>
+    </div>
+    <div class="floating-card">
+      <div class="floating-card-icon">🛒</div>
+      <div class="floating-card-title">Instamart Grocery</div>
+      <div class="floating-card-sub">Delivery in 10 min</div>
+      <span class="floating-card-badge">New</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOD CATEGORIES ── -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-tag">Explore Menu</div>
+    <h2 class="section-title">What Are You<br>Craving Today?</h2>
+    <p class="section-subtitle" style="margin-bottom:48px;">Browse top food categories and discover what thousands of Kolkatans are ordering right now.</p>
+    <div class="slider-wrapper">
+      <button class="slider-arrow left" onclick="scroll('categorySlider', -1)">❮</button>
+      <div class="category-slider" id="categorySlider">
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Biryani.png"><p>Biryani</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Pizza.png"><p>Pizza</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Burger.png"><p>Burger</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Dosa.png"><p>Dosa</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Cake.png"><p>Cakes</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Rolls.png"><p>Rolls</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Noodles.png"><p>Noodles</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Biryani.png"><p>Chinese</p></div>
+        <div class="cat-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/PC_Mweb/Rolls.png"><p>Wraps</p></div>
+      </div>
+      <button class="slider-arrow right" onclick="scroll('categorySlider', 1)">❯</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSTAMART ── -->
+<section id="instamart" class="section" style="background:#fff;">
+  <div class="container">
+    <div class="section-tag">Instamart</div>
+    <h2 class="section-title">Groceries in<br>Minutes</h2>
+    <p class="section-subtitle" style="margin-bottom:48px;">Fresh produce, pantry essentials, and more delivered to your door in under 15 minutes.</p>
+    <div class="slider-wrapper">
+      <button class="slider-arrow left" onclick="scroll('instaSlider', -1)">❮</button>
+      <div class="insta-slider" id="instaSlider">
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/43e3c412-4ca9-4894-82ba-24b69da80aa6_06c0d2a9-804c-4bf1-8725-7ebd234e144a"><p>Fresh Vegetables</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/a1493d81-f21e-415f-9875-f78383590fc2_9f3f0f68-4fbe-40f6-8f5d-5472a03469bd"><p>Fresh Fruits</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/6dea6676-ce07-45e6-b60c-a099c01c5462_6d33297a-5828-48ff-aa2a-c052ae97669e"><p>Dairy & Eggs</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/097900ca-5d2d-4bb0-8e54-aede1e58dfd8_eab3796c-ac17-48fd-bfc7-6356c6f89783"><p>Rice, Atta & Dals</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/64714677-e6b6-41c1-b533-6644d43e55f7_76ef86af-0483-41a5-8387-37901bf4ca6a"><p>Masalas & Dry Fruits</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/8e48ee13-3b51-49ea-b765-5cf3e7a97c04_695caa8a-c2f6-4a1a-9672-53213fea21aa"><p>Oils & Ghee</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2024/7/6/73e018a7-d342-475e-aaca-ec5cd3d0c59f_228ff3d4-ff21-44db-9768-7a369c65ce6a"><p>Munchies</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2024/7/6/83a9b71b-1db7-4cbe-a9f7-ead650d26326_3afbe8c8-f5c8-4dd7-8357-f5711f80646b"><p>Sweet Tooth</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2024/7/6/37d399b1-52d2-47ef-bdd8-8951e51819fc_0361a93d-e864-49be-a57d-46c958eb7b56"><p>Cold Drinks</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/25be4b2d-a9de-495e-a9a4-9a6d6a3d13c0_5f571281-eef0-4820-9982-d8bdd9af91c6"><p>Meat & Seafood</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2025/5/14/5fc3d15a-26b0-41e0-93ab-39ada0f553c2_82e0ff9f-558c-45dd-af3e-fdc16d0aa471"><p>Tea & Coffee</p></div>
+        <div class="insta-card"><img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/NI_CATALOG/IMAGES/CIW/2024/7/6/73a47bc4-c684-447f-9908-22da3ecd3ba2_c9948a61-3dca-4e29-82b4-31178d38746b"><p>Cleaning</p></div>
+      </div>
+      <button class="slider-arrow right" onclick="scroll('instaSlider', 1)">❯</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESTAURANTS ── -->
+<section id="restaurants" class="section" style="background: var(--cream);">
+  <div class="container">
+    <div class="section-tag">Dineout</div>
+    <h2 class="section-title">Best Restaurants<br>Near You</h2>
+    <p class="section-subtitle" style="margin-bottom:48px;">Hand-picked dining experiences across Kolkata, with exclusive deals and real-time availability.</p>
+    <div class="slider-wrapper">
+      <button class="slider-arrow left" onclick="scroll('restSlider', -1)">❮</button>
+      <div class="rest-slider" id="restSlider">
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="re1.jpg" alt="Te Amo Cafe">
+            <div class="rest-rating high">4.3 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Te Amo Cafe & Lounge</div>
+            <div class="rest-cuisine">Chinese • Desserts</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 4.4 km</span>
+              <span><i class="bi bi-people"></i> ₹1000 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 20% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res2.jpg" alt="Hotel Mahal">
+            <div class="rest-rating high">4.5 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Hotel Mahal</div>
+            <div class="rest-cuisine">North Indian • Fast Food</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 0.4 km</span>
+              <span><i class="bi bi-people"></i> ₹1000 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 10% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res3.webp" alt="Too Yammy">
+            <div class="rest-rating high">4.3 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Too Yammy Cafe</div>
+            <div class="rest-cuisine">Chinese</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 4.4 km</span>
+              <span><i class="bi bi-people"></i> ₹1000 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 20% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res5.webp" alt="Spacy">
+            <div class="rest-rating">4.0 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Spacy</div>
+            <div class="rest-cuisine">North Indian • Fast Food</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 1.4 km</span>
+              <span><i class="bi bi-people"></i> ₹800 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 10% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res6.webp" alt="Red Chili">
+            <div class="rest-rating high">4.4 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Red Chili</div>
+            <div class="rest-cuisine">Chinese • Thai</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 1 km</span>
+              <span><i class="bi bi-people"></i> ₹1000 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 10% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res8.webp" alt="Bawarchi">
+            <div class="rest-rating">3.9 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Bawarchi</div>
+            <div class="rest-cuisine">Fast Food • Pizza</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 4.5 km</span>
+              <span><i class="bi bi-people"></i> ₹300 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 40% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+        <div class="rest-card">
+          <div class="rest-img-wrap">
+            <img src="res12.webp" alt="Bhuter Raja">
+            <div class="rest-rating high">4.5 ★</div>
+          </div>
+          <div class="rest-body">
+            <div class="rest-name">Bhuter Raja Dilo Bor</div>
+            <div class="rest-cuisine">Chinese • Bengali</div>
+            <div class="rest-meta">
+              <span><i class="bi bi-geo-alt"></i> 5.8 km</span>
+              <span><i class="bi bi-people"></i> ₹1200 for two</span>
+            </div>
+            <div class="rest-offers">
+              <span class="badge-offer badge-red">Flat 25% off</span>
+              <span class="badge-offer badge-gold">Bank offer</span>
+            </div>
+            <a href="#" class="btn-view">View Restaurant</a>
+          </div>
+        </div>
+
+      </div>
+      <button class="slider-arrow right" onclick="scroll('restSlider', 1)">❯</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOKING ── -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="booking-grid">
+      <div class="booking-info">
+        <div class="section-tag">Reservations</div>
+        <h2 class="section-title">Reserve Your<br>Perfect Table</h2>
+        <p>Skip the wait. Book your spot at any of our partner restaurants in seconds — and get priority seating with exclusive FooDiEs perks.</p>
+        <div class="booking-feature">
+          <div class="booking-feature-icon"><i class="bi bi-lightning-fill"></i></div>
+          <div class="booking-feature-text">
+            <h4>Instant Confirmation</h4>
+            <p>Get your booking confirmed in real time, no waiting required.</p>
+          </div>
+        </div>
+        <div class="booking-feature">
+          <div class="booking-feature-icon"><i class="bi bi-gift-fill"></i></div>
+          <div class="booking-feature-text">
+            <h4>Exclusive Offers</h4>
+            <p>Unlock special pre-booking discounts only available on FooDiEs.</p>
+          </div>
+        </div>
+        <div class="booking-feature">
+          <div class="booking-feature-icon"><i class="bi bi-shield-check-fill"></i></div>
+          <div class="booking-feature-text">
+            <h4>Free Cancellation</h4>
+            <p>Plans change. Cancel for free up to 1 hour before your booking.</p>
+          </div>
+        </div>
+      </div>
+      <div class="booking-form">
+        <h3 style="font-size:1.5rem;margin-bottom:28px;">Book a Table 🍴</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="+91 XXXXX XXXXX">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com">
+          </div>
+          <div class="form-group">
+            <label>Guests</label>
+            <select>
+              <option>1 Person</option>
+              <option>2 People</option>
+              <option>3–5 People</option>
+              <option>6+ People</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time">
+          </div>
+          <div class="form-group full">
+            <label>Special Requests</label>
+            <textarea rows="3" placeholder="Dietary needs, occasion, seating preference…"></textarea>
+          </div>
+        </div>
+        <button class="btn-book">Confirm Reservation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BRANCHES ── -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-tag">Our Branches</div>
+    <h2 class="section-title" style="color:#fff;">Find Us Around<br>Kolkata</h2>
+    <p class="section-subtitle" style="margin-bottom:48px;">Five convenient locations across the city, each delivering the same warm FooDiEs experience.</p>
+    <div class="slider-wrapper">
+      <button class="slider-arrow left" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.1);color:#fff;" onclick="scroll('branchSlider', -1)">❮</button>
+      <div class="branch-slider" id="branchSlider">
+        <div class="branch-card">
+          <div class="branch-img"><img src="branch1.webp" alt="Kolkata Central"></div>
+          <div class="branch-body">
+            <h5>Kolkata Central</h5>
+            <p>Park Street, Kolkata</p>
+            <p class="branch-phone"><i class="bi bi-telephone"></i> +91 9876543210</p>
+            <button class="btn-order">Order Now</button>
+          </div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-img"><img src="branch2.webp" alt="Salt Lake"></div>
+          <div class="branch-body">
+            <h5>Salt Lake — Sector V</h5>
+            <p>IT Hub, Kolkata</p>
+            <p class="branch-phone"><i class="bi bi-telephone"></i> +91 9123456780</p>
+            <button class="btn-order">Order Now</button>
+          </div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-img"><img src="branch3.webp" alt="Howrah"></div>
+          <div class="branch-body">
+            <h5>Howrah</h5>
+            <p>Near Howrah Station</p>
+            <p class="branch-phone"><i class="bi bi-telephone"></i> +91 9988776655</p>
+            <button class="btn-order">Order Now</button>
+          </div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-img"><img src="branch4.webp" alt="Salt Lake II"></div>
+          <div class="branch-body">
+            <h5>Salt Lake — Sector II</h5>
+            <p>Bidhan Nagar, Kolkata</p>
+            <p class="branch-phone"><i class="bi bi-telephone"></i> +91 9123456780</p>
+            <button class="btn-order">Order Now</button>
+          </div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-img"><img src="branch5.webp" alt="Park Street"></div>
+          <div class="branch-body">
+            <h5>Park Street South</h5>
+            <p>Kolkata</p>
+            <p class="branch-phone"><i class="bi bi-telephone"></i> +91 9876543210</p>
+            <button class="btn-order">Order Now</button>
+          </div>
+        </div>
+      </div>
+      <button class="slider-arrow right" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.1);color:#fff;" onclick="scroll('branchSlider', 1)">❯</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ── -->
+<section id="partners" class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px;">
+      <div class="section-tag">Collaborations</div>
+      <h2 class="section-title">Our Trusted Partners</h2>
+      <p class="section-subtitle" style="margin:auto;">We work with the best in the business to bring you unmatched food experiences.</p>
+    </div>
+    <div class="partners-grid">
+      <div class="partner-card">
+        <img src="Swiggy_logo.png" alt="Swiggy">
+        <h6>Swiggy</h6>
+      </div>
+      <div class="partner-card">
+        <img src="zomato.jpg" alt="Zomato">
+        <h6>Zomato</h6>
+      </div>
+      <div class="partner-card">
+        <img src="Uber Eats.png" alt="Uber Eats">
+        <h6>Uber Eats</h6>
+      </div>
+      <div class="partner-card">
+        <img src="Domino's.webp" alt="Domino's">
+        <h6>Domino's</h6>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AWARDS ── -->
+<section id="awards" class="section" style="background: var(--cream);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px;">
+      <div class="section-tag">Recognition</div>
+      <h2 class="section-title">Awards & Achievements</h2>
+      <p class="section-subtitle" style="margin:auto;">Proudly recognised by the industry for excellence in food delivery and innovation.</p>
+    </div>
+    <div class="awards-grid">
+      <div class="award-card"><img src="aw1.webp" alt="Award"><h6>Best Food Delivery</h6><p>2024</p></div>
+      <div class="award-card"><img src="aw3.webp" alt="Award"><h6>Top Startup</h6><p>2023</p></div>
+      <div class="award-card"><img src="aw4.webp" alt="Award"><h6>Customer Choice</h6><p>2022</p></div>
+      <div class="award-card"><img src="aw21.jpg" alt="Award"><h6>Innovation Award</h6><p>2021</p></div>
+      <div class="award-card"><img src="aw5.webp" alt="Award"><h6>Excellence in Delivery</h6><p>2020</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">FooDiEs <span>HuB</span></div>
+        <p class="footer-desc">Kolkata's favourite food delivery and restaurant discovery platform. Fast, fresh, and always delicious.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-social-btn"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-social-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="footer-social-btn"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Menu</a></li>
+          <li><a href="#restaurants">Restaurants</a></li>
+          <li><a href="#instamart">Instamart</a></li>
+          <li><a href="#contact">Reserve a Table</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Popular Areas</h5>
+        <ul class="footer-links">
+          <li><a href="#">Park Street</a></li>
+          <li><a href="#">Salt Lake</a></li>
+          <li><a href="#">Howrah</a></li>
+          <li><a href="#">Bhowanipore</a></li>
+          <li><a href="#">Entally</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact Us</h5>
+        <div class="footer-contact-item">
+          <i class="bi bi-geo-alt-fill"></i>
+          <span>Park Street, Kolkata, West Bengal 700016</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="bi bi-telephone-fill"></i>
+          <span>+91 9876 543 210</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="bi bi-envelope-fill"></i>
+          <span>support@foodieshub.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FooDiEs HuB. All Rights Reserved.</span>
+      <span>Privacy Policy · Terms of Service · Sitemap</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  navbar.classList.add('scrolled'); // start dark for non-transparent bg browsers
+
+  // Universal slider scroll
+  function scroll(id, dir) {
+    document.getElementById(id).scrollBy({ left: dir * 320, behavior: 'smooth' });
+  }
+
+  // Geolocation
+  function detectLocation() {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude } = pos.coords;
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('locationInput').value =
+            d.address.suburb || d.address.city || d.display_name;
+        }).catch(() => {
+          document.getElementById('locationInput').value = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+        });
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.award-card, .partner-card, .rest-card, .booking-form, .booking-info').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  function toggleMenu() {
+  document.querySelector('.nav-links').classList.toggle('active');
+}
+</script>
+</body>
+</html>
